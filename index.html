@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CP1 WebDev - CRUD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form id="cardForm">
+        <label>Nome: </label>
+        <input id="cardName" type="text" placeholder="Nome da atleta" required>
+        <br><br>
+        <i class="fa-solid fa-list"></i> <label>Posição:</label>
+        <select id="cardPosition" required>
+            <option value="" disabled selected>Selecione a posição</option>
+            <option value="Goleiro">Goleira</option>
+            <option value="Zagueiro">Zagueiro</option>
+            <option value="LateralEsquerdo">Lateral Esquerdo</option>
+            <option value="LateralDireito">Lateral Direito</option>
+            <option value="Volante">Volante</option>
+            <option value="MeioEsquerdo">Meio-Campista Esquerdo</option>
+            <option value="MeioDireita">Meio-Campista Direito</option>
+            <option value="Atacante">Atacante</option>
+            </option>
+        </select>
+        
+        <br><br>
+        <label>Clube:</label>
+        <input type="text" id="cardClub" placeholder="Clube da atleta" required><br><br>
+        
+        <br>
+        <label>Estatísticas: </label><br>
+        <input type="number" id="cardGols" placeholder="Gols" required> <br>
+        <input type="number" id="cardAssistencias" placeholder="Assistências" required> <br>
+        <input type="number" id="cardJogos" placeholder="Partidas" required> <br><br>
+
+
+        <i class="fa-solid fa-image"></i> <label>Insira a imagem da atleta (URL):</label><br>
+        <input type="text" id="cardImage" placeholder="Insira a url aqui"><br>
+        <button type="submit"><i class="fa-solid fa-bullhorn"></i> Enviar </button>
+    </form>
+
+    
+
+    <div id="cardsList"></div>
+</body>
+    <script src="app.js"></script>
+</html>
