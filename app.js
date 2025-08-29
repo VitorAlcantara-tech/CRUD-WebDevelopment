@@ -55,7 +55,9 @@ let atletas = [
 window.onload = function () {
     carregarAtletasLocalStorage();
     criarCards();
-
+    
+    
+    document.getElementById("search").addEventListener("input", buscarPeloNomeOuPosicao);
     document.getElementById("cardForm").addEventListener("submit", addCards);
     document.getElementById("cardsList").addEventListener("click", handleClick);
 }
@@ -64,14 +66,17 @@ window.onload = function () {
 const handleClick = (infosDoEvento) => {
     const acaoBtn = infosDoEvento.target.dataset.action;
     const indexCard = infosDoEvento.target.dataset.index;
-    
-    if(!acaoBtn) return;
 
-    if(acaoBtn === "Editar"){
-        editarCards(indexCard) 
+    if (!acaoBtn) return;
+
+    if (acaoBtn === "Editar") {
+        editarCards(indexCard)
     }
-    else if(acaoBtn === "Apagar"){
+    else if (acaoBtn === "Apagar") {
         apagarCards(indexCard)
+    }
+    else if (acaoBtn === "Favoritar") {
+        favoritarCards(indexCard)
     }
 }
 
@@ -87,16 +92,16 @@ function criarCards() {
         cardElement.classList.add('card__atleta');
 
         cardElement.innerHTML = `
-            ${pegaCard.foto ? `<img src="${pegaCard.foto}" alt="Imagem da ${pegaCard.nome}" style="max-width:150px;">` : ""}
-            <p>${pegaCard.nome}</p>
-                <p>Posição: ${pegaCard.posicao}</p>
-                <p>Clube: ${pegaCard.clube}</p>
-                <p>Gols: ${pegaCard.gols}</p>
-                <p>Assistências: ${pegaCard.assistencias}</p>
-                <p>Partidas: ${pegaCard.jogos}</p>
-                <button data-action="Editar" data-index=${index}><i class="fa-solid fa-pen-to-square"></i> Editar</button>
-                <button data-action="Apagar" data-index=${index}><i class="fa-solid fa-eraser"></i> Apagar</button>
-                <hr style="margin:50px;">`;
+        ${pegaCard.foto ? `<img src="${pegaCard.foto}" alt="Imagem da ${pegaCard.nome}" style="max-width:200px;">` : ""}
+        <h3>${pegaCard.nome}</h3>
+        <p>Posição: ${pegaCard.posicao}</p>
+        <p>Clube: ${pegaCard.clube}</p>
+        <p>Gols: ${pegaCard.gols}</p>
+        <p>Assistências: ${pegaCard.assistencias}</p>
+        <p>Jogos: ${pegaCard.jogos}</p>
+        <button data-action="Editar" data-index=${index}><i class="fa-solid fa-pen"></i> Editar</button>
+        <button data-action="Apagar" data-index=${index}><i class="fa-solid fa-user-minus"></i> Remover</button>
+        <button data-action="Favoritar" data-index=${index} style="background: none; color: gold; font-size:20px;"><i class="fa-regular fa-star" data-action="Favoritar" data-index=${index}></i></button>`;
 
         cardsList.append(cardElement);
     })
@@ -113,7 +118,7 @@ const carregarAtletasLocalStorage = () => {
 
     if (atletasGuardados) {
         atletas = JSON.parse(atletasGuardados)
-        console.log("Atletas carregados do Local Storage:", atletas); 
+        console.log("Atletas carregados do Local Storage:", atletas);
     }
 }
 
@@ -143,24 +148,24 @@ function addCards(e) {
         "favorita": false
     }
 
-    console.log("Funcionou");
-    
     atletas.unshift(cardNovo);
     salvarLocalStorage();
 
     document.querySelector('#cardForm').reset();
     criarCards();
+    alert("Jogadora adicionada com sucesso!");
+    
 }
 
-// Função para editar e apagar cards
+// Função para apagar, editar e favoritar cards
 
 function apagarCards(indexCard) {
-    const confirmar = confirm("Tem certeza que deseja apagar este atleta?");
+    const confirmar = confirm("Tem certeza que deseja apagar esta jogadora?");
 
-    if(confirmar){
-        atletas.splice(indexCard, 1)
-        salvarLocalStorage();
-        criarCards()
+    if (confirmar) {
+        atletas.splice(indexCard, 1);
+        criarCards();
+        alert("Jogadora removida com sucesso!");
     }
 }
 
@@ -182,4 +187,43 @@ function editarCards(indexCard) {
     atletas[indexCard].jogos = novosJogos;
     criarCards();
     salvarLocalStorage();
+    alert("Jogadora editada com sucesso!");
+}
+
+function favoritarCards(indexCard) {
+    const estadoAtual = atletas[indexCard].favorita;
+    atletas[indexCard].favorita = !estadoAtual;
+
+    const btn = document.querySelector(`button[data-action="Favoritar"][data-index="${indexCard}"]`);
+    const icon = btn.querySelector("i");
+
+    if (atletas[indexCard].favorita) {
+        icon.classList.remove("fa-regular");
+        icon.classList.add("fa-solid");
+    } else {
+        icon.classList.remove("fa-solid");
+        icon.classList.add("fa-regular");
+    }
+
+    salvarLocalStorage();
+    console.log("Favoritar funcionou");
+}
+
+// Função de busca
+function buscarPeloNomeOuPosicao() {
+    const filtro = document.getElementById('search').value.toLowerCase();
+    const cards = document.querySelectorAll('.card__atleta');
+
+    cards.forEach(card => {
+        const nome = card.querySelector(card.nome).innerText.toLowerCase();
+        const posicao = card.querySelector(card.posicao.value).innerText.toLowerCase();
+        console.log(nome, posicao);
+        
+
+        if (nome.includes(filtro) || posicao.includes(filtro)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
 }

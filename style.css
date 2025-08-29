@@ -1,0 +1,130 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica;
+}
+
+label{
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    
+}
+ 
+.logo{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100px;
+}
+
+.container{
+    background: linear-gradient(0deg,rgb(43, 0, 59) 0%, rgb(71, 9, 121) 35%, rgb(115, 0, 255) 100%);
+    padding: 1.5% 23% 5% 23%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#cardForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12.5px;
+    padding: 0px 100px 15px 100px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.titulo{
+    margin: 30px 0 10px;
+    font-size: 25px;
+    font-weight: 700;
+    text-align: center;
+}
+
+input, select{
+    padding: 10px;
+    border: 1.5px solid #b1b1b1;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#cardForm button{
+    background-color: #3da831;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    width: 30%;
+    align-self: flex-end;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .3s ease;
+    margin: 10px 0;
+}
+
+#cardForm button:hover{
+    background-color: #25641e;
+    color: rgb(240, 240, 240);
+    transform: scale(1.05);
+}
+
+select{
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+#cardsList{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    margin-top: 50px;
+}
+
+.card__atleta{
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    padding: 30px 0px 20px 0px;
+}
+
+.card__atleta > *{
+    margin-bottom: 15px;
+}
+
+.card__atleta img{
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+
+.card__atleta h3{
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+}
+.card__atleta p{
+    width: 150px;
+    margin: 10px auto;
+    font-size: 18px;
+    font-weight: 300;
+    text-align: left;
+}
+
+.card__atleta button{
+    background-color: #570baf;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .3s ease;
+    margin-top: 10px;
+}
