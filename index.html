@@ -19,6 +19,7 @@
                 <h2>Formulário de Registro</h2>
             </div>
 
+            <label for="name">Preencha as informações:</label>
             <input id="cardName" type="text" placeholder="Nome completo da jogadora" required>
 
             <input type="text" id="cardClub" placeholder="Clube da jogadora" required>
@@ -30,13 +31,13 @@
             <label>Posição:</label>
             <select id="cardPosition" required>
                 <option value="" disabled selected> -- Selecione a posição --</option>
-                <option value="Goleiro">Goleira</option>
-                <option value="Zagueiro">Zagueiro</option>
-                <option value="LateralEsquerdo">Lateral Esquerdo</option>
-                <option value="LateralDireito">Lateral Direito</option>
+                <option value="Goleira">Goleira</option>
+                <option value="Zagueira">Zagueira</option>
+                <option value="Lateral-Esquerda">Lateral Esquerda</option>
+                <option value="Lateral-Direita">Lateral Direita</option>
                 <option value="Volante">Volante</option>
-                <option value="MeioEsquerdo">Meio-Campista Esquerdo</option>
-                <option value="MeioDireita">Meio-Campista Direito</option>
+                <option value="Meia-Esquerdo">Meia-Campista Esquerda</option>
+                <option value="Meia Direita">Meia-Campista Direita</option>
                 <option value="Atacante">Atacante</option>
                 </option>
             </select>
@@ -47,10 +48,13 @@
         </form>
 
         <div class="filtros">
-            <input type="text" id="search" placeholder= " Buscar por nome ou posição">
-            <button id="buscar">  </button>
-            <input type="text" id="filter" placeholder="Filtrar por clube">
-            <button id="filtrar"> <i class="fa-solid fa-filter"></i> </button>
+            <input type="text" id="search" placeholder=" Buscar por nome ou posição">
+            <select id="filtroClube">
+                <option value="" disable select>Todos os clubes</option>
+            </select>
+            <i class="fa-solid fa-filter"></i>
+            <button id="ordenarNome">Ordenar por nome</button>
+            <button id="ordenarPosicao">Ordenar por posição</button>
         </div>
         <div id="cardsList"></div>
     </div>

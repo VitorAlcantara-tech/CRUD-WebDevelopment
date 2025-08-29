@@ -55,11 +55,13 @@ let atletas = [
 window.onload = function () {
     carregarAtletasLocalStorage();
     criarCards();
-    
-    
+
+
     document.getElementById("search").addEventListener("input", buscarPeloNomeOuPosicao);
     document.getElementById("cardForm").addEventListener("submit", addCards);
     document.getElementById("cardsList").addEventListener("click", handleClick);
+    document.getElementById("filtroClube").addEventListener("change", filtrarPorClubes);
+    document.getElementById("ordenarNome", "ordenarPosicao").addEventListener("click", ordernar);
 }
 
 // Evento de clique para editar e apagar cards
@@ -91,6 +93,11 @@ function criarCards() {
         const cardElement = document.createElement('div');
         cardElement.classList.add('card__atleta');
 
+        cardElement.dataset.nome = pegaCard.nome;
+        cardElement.dataset.posicao = pegaCard.posicao
+        cardElement.dataset.clube = pegaCard.clube
+
+
         cardElement.innerHTML = `
         ${pegaCard.foto ? `<img src="${pegaCard.foto}" alt="Imagem da ${pegaCard.nome}" style="max-width:200px;">` : ""}
         <h3>${pegaCard.nome}</h3>
@@ -105,6 +112,9 @@ function criarCards() {
 
         cardsList.append(cardElement);
     })
+
+    atualizarFiltroClubes();
+    
 }
 
 // Função para salvar atletas no Local Storage
@@ -154,7 +164,7 @@ function addCards(e) {
     document.querySelector('#cardForm').reset();
     criarCards();
     alert("Jogadora adicionada com sucesso!");
-    
+
 }
 
 // Função para apagar, editar e favoritar cards
@@ -211,19 +221,94 @@ function favoritarCards(indexCard) {
 
 // Função de busca
 function buscarPeloNomeOuPosicao() {
-    const filtro = document.getElementById('search').value.toLowerCase();
-    const cards = document.querySelectorAll('.card__atleta');
+    const norm = (s) => (s || "")
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .toLowerCase()
+        .trim();
+
+    const buscar = document.getElementById("search");
+    const cards = document.querySelectorAll(".card__atleta");
+
+    const filtrar = () => {
+        const filtro = norm(buscar.value);
+        cards.forEach(card => {
+            const nome = norm(card.dataset.nome);
+            const posicao = norm(card.dataset.posicao);
+
+            const match = !filtro || nome.includes(filtro) || posicao.includes(filtro);
+            card.hidden = !match;
+        });
+    };
+    buscar.addEventListener("input", filtrar);
+    console.log("Buscar funcionou");
+}
+
+
+// Função para atualizar o filtro de clubes
+function atualizarFiltroClubes() {
+    const norm = (s) => (s || "")
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .toLowerCase()
+        .trim();
+    const sel = document.getElementById("filtroClube");
+    if (!sel) return;
+
+    const valorAtual = sel.value;
+    // colete clubes únicos a partir do array atletas
+    const clubes = Array.from(new Set(
+        atletas
+            .map(a => (a.clube || "").trim())
+            .filter(Boolean)
+    ));
+    // ordena de forma case/acento-insensitive
+    clubes.sort((a, b) => norm(a).localeCompare(norm(b)));
+
+    sel.innerHTML = `<option value="">Todos os clubes</option>` +
+        clubes.map(c => `<option value="${c}">${c}</option>`).join("");
+
+    // mantém a seleção anterior se ainda existir
+    if (valorAtual && clubes.includes(valorAtual)) sel.value = valorAtual;
+}
+
+// Função para filtrar por clubes
+function filtrarPorClubes() {
+    let valorOption = document.getElementById("filtroClube").value;
+    const cards = document.querySelectorAll(".card__atleta");
 
     cards.forEach(card => {
-        const nome = card.querySelector(card.nome).innerText.toLowerCase();
-        const posicao = card.querySelector(card.posicao.value).innerText.toLowerCase();
-        console.log(nome, posicao);
-        
-
-        if (nome.includes(filtro) || posicao.includes(filtro)) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
+        switch (valorOption) {
+            case card.dataset.clube:
+                card.hidden = false;
+                break;
+            case "":
+                card.hidden = false;
+                break;
+            default:
+                card.hidden = true;
+                break;
+            
         }
+    })
+
+}
+
+
+// Função para ordenar por nome ou posição
+function ordernar() {
+    const btnNome = document.getElementById("ordenarNome");
+    const btnPosicao = document.getElementById("ordenarPosicao");
+
+    btnNome.addEventListener("click", () => {
+        atletas.sort((a, b) => a.nome.localeCompare(b.nome));
+        console.log("Ordenar por nome funcionou");
+        
+        criarCards();
+    });
+
+    btnPosicao.addEventListener("click", () => {
+        atletas.sort((a, b) => a.posicao.localeCompare(b.posicao));
+        criarCards();
     });
 }

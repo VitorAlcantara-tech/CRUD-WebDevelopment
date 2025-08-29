@@ -75,7 +75,6 @@ input, select{
 
 select{
     cursor: pointer;
-    -webkit-appearance: none;
 }
 
 #cardsList{
@@ -110,7 +109,7 @@ select{
     text-align: center;
 }
 .card__atleta p{
-    width: 150px;
+    width: 200px;
     margin: 10px auto;
     font-size: 18px;
     font-weight: 300;
@@ -127,4 +126,43 @@ select{
     cursor: pointer;
     transition: all .3s ease;
     margin-top: 10px;
+}
+
+.card__atleta button:hover{
+    background-color: #3a075f;
+    color: rgb(240, 240, 240);
+    transform: scale(1.05);
+}
+
+.filtros{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.filtros input, .filtros select{
+    padding: 8px;
+    border: 1px solid #b1b1b1;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 15rem;
+}
+
+.filtros button{
+    background-color: #481087;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.filtros button:hover{
+    background-color: #3a075f;
+    color: rgb(240, 240, 240);
+    transform: scale(1.05);
 }
