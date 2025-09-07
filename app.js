@@ -256,17 +256,22 @@ function atualizarFiltroClubes() {
     if (!sel) return;
 
     const valorAtual = sel.value;
-    // colete clubes únicos a partir do array atletas
+    
+    //  new Set tira clubes dulpicados
+    //  .trim() tira espaços em branco
+    //  .filter(Boolean) tira valores vazios ou nulos
+    //  Array.from transforma de volta em array
     const clubes = Array.from(new Set(
         atletas
             .map(a => (a.clube || "").trim())
             .filter(Boolean)
     ));
-    // ordena de forma case/acento-insensitive
+    
+    //  .sort ordena os clubes alfabeticamente, junto com o norm para ignorar acentos
     clubes.sort((a, b) => norm(a).localeCompare(norm(b)));
 
     sel.innerHTML = `<option value="">Todos os clubes</option>` +
-        clubes.map(c => `<option value="${c}">${c}</option>`).join("");
+        clubes.map(novoClube => `<option value="${novoClube}">${novoClube}</option>`);
 
     // mantém a seleção anterior se ainda existir
     if (valorAtual && clubes.includes(valorAtual)) sel.value = valorAtual;
