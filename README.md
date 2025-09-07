@@ -24,6 +24,6 @@ Projeto desenvolvido em **HTML, CSS e JavaScript Vanilla**, com o objetivo de **
 └── assets/           # Imagens e ícones
 ```
 ## 📦 Acesse aqui:
-link do site: 
+link do site: https://vitoralcantara-tech.github.io/CRUD-WebDevelopment/
 
 ## Desenvolvido com 💻 por Vitor Alcantara
